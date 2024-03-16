@@ -1,15 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Splash_Screen extends StatefulWidget {
-  const Splash_Screen({super.key});
+import 'package:news_app/View_Models/service/splash_service.dart';
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<Splash_Screen> createState() => _Splash_ScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _Splash_ScreenState extends State<Splash_Screen> {
+class _SplashScreenState extends State<SplashScreen> {
+  SplashServices splashScreen = SplashServices();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    splashScreen.isLogin();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      backgroundColor: Colors.teal,
+      body: Center(
+          child: Text(
+        'welcome_back'.tr,
+        textAlign: TextAlign.center,
+      )),
+    );
   }
 }
