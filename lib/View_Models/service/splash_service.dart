@@ -10,8 +10,8 @@ class SplashServices {
 
   void isLogin() {
     userPreference.getUser().then((value) {
-      print(value.token);
-      print(value.isLogin);
+      print("this is Token${value.token}");
+      print("this is value ${value.isLogin}");
 
       if (value.isLogin == false || value.isLogin.toString() == 'null') {
         Timer(
