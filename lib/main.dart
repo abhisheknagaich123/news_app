@@ -13,7 +13,7 @@ Future<void> main() async {
     translations: Languages(),
     locale: const Locale('en', 'US'),
     fallbackLocale: const Locale('en', 'US'),
-    theme: lightTheme,
+    theme: darkTheme,
     themeMode: ThemeMode.system,
     darkTheme: darkTheme,
     getPages: AppRoutes.appRoutes(),
