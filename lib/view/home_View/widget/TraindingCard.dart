@@ -28,7 +28,7 @@ class _TraindincardState extends State<Traindincard> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.network(
-                "https://static.toiimg.com/thumb/msid-108622861,imgsize-1866285,width-400,resizemode-4/108622861.jpg",
+                "https://static.toiimg.com/thumb/msid-108654854,imgsize-63124,width-400,resizemode-4/108654854.jpg",
                 fit: BoxFit.cover,
               ),
             ),

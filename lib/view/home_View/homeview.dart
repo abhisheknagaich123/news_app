@@ -27,7 +27,6 @@ class _HomeViewState extends State<HomeView> {
           style: Theme.of(context).textTheme.headlineLarge,
         ),
       ),
-      floatingActionButton: bottomnavbar(),
       body: Padding(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(
