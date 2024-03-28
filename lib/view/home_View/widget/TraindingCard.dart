@@ -1,83 +1,103 @@
 import 'package:flutter/material.dart';
 
-class Traindincard extends StatefulWidget {
-  const Traindincard({super.key});
+class TrandingCard extends StatelessWidget {
+  final String imageUrl;
+  final String tag;
+  final String time;
+  final String title;
+  final String author;
+  final VoidCallback ontap;
+  const TrandingCard(
+      {super.key,
+      required this.imageUrl,
+      required this.tag,
+      required this.time,
+      required this.title,
+      required this.author,
+      required this.ontap});
 
-  @override
-  State<Traindincard> createState() => _TraindincardState();
-}
-
-class _TraindincardState extends State<Traindincard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(right: 10),
-      padding: EdgeInsets.all(6),
-      height: 300,
-      width: 280,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Theme.of(context).colorScheme.primaryContainer),
-      child: Column(
-        children: [
+    return InkWell(
+      onTap: ontap,
+      child: Container(
+        margin: const EdgeInsets.only(right: 10),
+        padding: const EdgeInsets.all(5),
+        // height: 300,
+        width: 280,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Theme.of(context).colorScheme.primaryContainer,
+        ),
+        child: Column(children: [
           Container(
-            height: 170,
+            height: 200,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).colorScheme.background),
+              borderRadius: BorderRadius.circular(20),
+              color: Theme.of(context).colorScheme.background,
+            ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(20),
               child: Image.network(
-                "https://static.toiimg.com/thumb/msid-108654854,imgsize-63124,width-400,resizemode-4/108654854.jpg",
+                imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          SizedBox(
-            height: 5,
-          ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Tranding No 1",
+                tag,
                 style: Theme.of(context).textTheme.labelSmall,
               ),
               Text(
-                "2 Days ago",
+                time,
                 style: Theme.of(context).textTheme.labelSmall,
               ),
             ],
           ),
+          const SizedBox(height: 5),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
-                  "UN issues 'red alert', warns 'planet on the brink' after ",
-                  style: Theme.of(context).textTheme.headlineMedium,
+                  title,
                   maxLines: 2,
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ),
             ],
           ),
-          SizedBox(
-            height: 12,
-          ),
+          const SizedBox(height: 10),
           Row(
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const SizedBox(width: 10),
               CircleAvatar(
                 radius: 15,
-                backgroundColor: Colors.yellow,
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Text(
+                  author[0],
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Text("Abhishe Nagaich")
+              const SizedBox(width: 10),
+              Flexible(
+                  child: Text(
+                author,
+                maxLines: 1,
+              ))
             ],
           ),
-        ],
+          const SizedBox(height: 10),
+        ]),
       ),
     );
   }
