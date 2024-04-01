@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:news_app/View_Models/controler/home/homeView.dart';
 import 'package:news_app/View_Models/controler/home/homebottomController.dart';
 import 'package:news_app/res/routes/routes.dart';
 
@@ -13,7 +12,7 @@ class AppRoutes {
   static appRoutes() => [
         GetPage(
           name: RouteName.splashScreen,
-          page: () => homebottomController(),
+          page: () => SplashScreen(),
           transitionDuration: Duration(milliseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),
@@ -31,7 +30,7 @@ class AppRoutes {
         ),
         GetPage(
           name: RouteName.homeView,
-          page: () => home(),
+          page: () => homebottomController(),
           transitionDuration: Duration(milliseconds: 250),
           transition: Transition.leftToRightWithFade,
         ),

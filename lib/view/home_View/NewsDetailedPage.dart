@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
+import 'package:news_app/Models/newsmodel/Traindingmodel.dart';
+import 'package:news_app/View_Models/controler/Traindingnewscontroller.dart';
 
-class NewsDetailedpage extends StatefulWidget {
-  const NewsDetailedpage({super.key});
+class NewsDetailsPage extends StatelessWidget {
+  final Traindingmodel news;
+  const NewsDetailsPage({super.key, required this.news});
 
-  @override
-  State<NewsDetailedpage> createState() => _NewsDetailedpageState();
-}
-
-class _NewsDetailedpageState extends State<NewsDetailedpage> {
   @override
   Widget build(BuildContext context) {
+    Traindingnews newsController = Get.put(Traindingnews());
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -49,7 +49,8 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Image.network(
-                            "https://static.toiimg.com/thumb/msid-46918916,width=1200,height=900/46918916.jpg",
+                            news.urlToImage ??
+                                "https://static.toiimg.com/thumb/msid-46918916,width=1200,height=900/46918916.jpg",
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -59,7 +60,7 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  "abhi",
+                  news.title!,
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -69,7 +70,7 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                 Row(
                   children: [
                     Text(
-                      "abhishek * 2day ago",
+                      "${news.author} * ${news.publishedAt}",
                       style: Theme.of(context).textTheme.labelSmall,
                     )
                   ],
@@ -81,7 +82,7 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                       radius: 15,
                       backgroundColor: Colors.red,
                       child: Text(
-                        "hello author",
+                        news.author![0],
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -90,7 +91,7 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      "ram arm ",
+                      news.author!,
                       style: TextStyle(
                           fontSize: 18,
                           color:
@@ -108,23 +109,35 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                   child: Row(
                     children: [
                       Obx(
-                        () => 5 > 2
+                        () => newsController.isSpeeking.value
                             ? IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  newsController.stop();
+                                },
                                 icon: Icon(
                                   Icons.stop,
                                   size: 50,
                                 ),
                               )
                             : IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  newsController.speak(
+                                      news.description ?? "No Description");
+                                },
                                 icon: Icon(
                                   Icons.play_arrow_rounded,
                                   size: 50,
                                 ),
                               ),
                       ),
-                      Expanded(child: Text('hello sir expand'))
+                      Expanded(
+                          child: Obx(
+                        () => Lottie.asset(
+                          'assets/Animation/wave.json',
+                          height: 70,
+                          animate: newsController.isSpeeking.value,
+                        ),
+                      ))
                     ],
                   ),
                 ),
@@ -133,7 +146,7 @@ class _NewsDetailedpageState extends State<NewsDetailedpage> {
                   children: [
                     Flexible(
                       child: Text(
-                        "No Description",
+                        news.description ?? "No Description",
                         style: TextStyle(
                             fontSize: 18,
                             color: Theme.of(context)

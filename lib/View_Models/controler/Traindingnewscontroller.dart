@@ -9,6 +9,9 @@ class Traindingnews extends GetxController {
   RxList<Traindingmodel> NewsForYou = <Traindingmodel>[].obs;
   RxBool isTrandingLoading = false.obs;
   RxBool isNewsForULoading = false.obs;
+
+  RxBool isSpeeking = false.obs;
+
   void onInit() async {
     super.onInit();
     getTranding();
@@ -63,5 +66,48 @@ class Traindingnews extends GetxController {
       print(ex);
     }
     isNewsForULoading.value = false;
+  }
+
+  Future<void> searchNews(String search) async {
+    isNewsForULoading.value = true;
+    var baseURL =
+        "https://newsapi.org/v2/everything?q=$search&apiKey=ea97c6bb67b040759084c3c20ea5e5cf";
+    try {
+      var response = await http.get(Uri.parse(baseURL));
+      print(response);
+      if (response.statusCode == 200) {
+        print(response.body);
+        var body = jsonDecode(response.body);
+        var articals = body["articles"];
+        NewsForYou.clear();
+        int i = 0;
+        for (var news in articals) {
+          i++;
+          NewsForYou.add(Traindingmodel.fromJson(news));
+          if (i == 10) {
+            break;
+          }
+        }
+      } else {
+        print("Something went Wrong in Tranding News");
+      }
+    } catch (ex) {
+      print(ex);
+    }
+    isNewsForULoading.value = false;
+  }
+
+  Future<void> speak(String text) async {
+    isSpeeking.value = true;
+    // await flutterTts.setLanguage("en-US");
+    // await flutterTts.setPitch(1);
+    // await flutterTts.setSpeechRate(0.5);
+    // await flutterTts.speak(text);
+    isSpeeking.value = false;
+  }
+
+  void stop() async {
+    // await flutterTts.stop();
+    isSpeeking.value = false;
   }
 }

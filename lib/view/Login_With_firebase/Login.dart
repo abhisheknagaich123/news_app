@@ -65,12 +65,13 @@ class _LoginState extends State<Login> {
                         validator: _controller.validateEmail,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
+                          // fillColor: Color.fromARGB(255, 214, 206, 181),
                           hintText: 'Email',
                           errorStyle:
                               TextStyle(color: Colors.redAccent, fontSize: 15),
                           prefixIcon: Icon(Icons.email),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                       )),
@@ -91,6 +92,7 @@ class _LoginState extends State<Login> {
                           },
                           controller: _controller.password.value,
                           decoration: InputDecoration(
+                            // fillColor: Color.fromARGB(255, 214, 206, 181),
                             hintText: 'Password',
                             prefixIcon: Icon(Icons.lock),
                             suffix: IconButton(
@@ -113,7 +115,7 @@ class _LoginState extends State<Login> {
                       if (_formKey.currentState!.validate()) {
                         // Handle your login logic here
                         _controller.emailAndPassword();
-                        _controller.cleartextfield();
+                        // _controller.cleartextfield();
                         print('Login tapped');
                       }
                     },

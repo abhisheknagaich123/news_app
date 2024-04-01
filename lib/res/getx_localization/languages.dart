@@ -15,6 +15,5 @@ class Languages extends Translations {
           'login': 'Login',
           'password_hint': 'Password',
         },
-        'ur_PK': {'email_hint': 'asدسسدفاسف'},
       };
 }

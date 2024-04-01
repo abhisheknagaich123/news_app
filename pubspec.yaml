@@ -45,6 +45,8 @@ dependencies:
   cloud_firestore: ^4.15.8
   shimmer: ^3.0.0
   
+  lottie: ^3.0.0
+  
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/Animation/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

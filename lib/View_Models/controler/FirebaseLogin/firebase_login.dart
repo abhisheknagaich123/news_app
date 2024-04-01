@@ -9,7 +9,6 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:news_app/Models/Login/user_model.dart';
 import 'package:news_app/View_Models/controler/user_prefernce/user_prefrence.dart';
-import 'package:news_app/data/response/status.dart';
 import 'package:news_app/res/routes/routes.dart';
 import 'package:news_app/utils/utils.dart';
 

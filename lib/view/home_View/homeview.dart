@@ -1,6 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:news_app/View_Models/controler/FirebaseLogin/firebase_login.dart';
 import 'package:news_app/View_Models/controler/Traindingnewscontroller.dart';
+import 'package:news_app/View_Models/controler/user_prefernce/user_prefrence.dart';
+import 'package:news_app/res/routes/routes.dart';
 import 'package:news_app/shimmer_Widget/shimmer_NewsTileLoading.dart';
 import 'package:news_app/shimmer_Widget/shimmer_TraindingCard.dart';
 
@@ -19,6 +23,9 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   // NewsController controller = Get.put(NewsController());
   Traindingnews controller = Get.put(Traindingnews());
+  final LoginController _controller = Get.put(LoginController());
+  UserPreference userPreference = UserPreference();
+  User? user = FirebaseAuth.instance.currentUser;
   // @override
   // void initState() {
   //   // TODO: implement initState
@@ -49,7 +56,19 @@ class _HomeViewState extends State<HomeView> {
                       color: Theme.of(context).colorScheme.primaryContainer,
                       borderRadius: BorderRadius.circular(100),
                     ),
-                    child: const Icon(Icons.dashboard),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: user != null
+                          ? Image.network(
+                              user!.photoURL ??
+                                  "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjg9hzTaf28CoQ11WqVsW-hgec_W_GXJlHabFy94PPsELvpRXFbF0uuSGYXnOErT3CkMIZYsPeL1Ukg0yautWbNllrn6xZyHisCdlOK-NWl6JFyIvmJnlCLedVMIAK4XgeDHLCIFMTJDAz3NOz2jwNSxs3Gawo7UJMPM23hDowyM3_DeF3gX7fcoptSs1E/s164/person.png",
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/person.png',
+                              fit: BoxFit.cover,
+                            ),
+                    ),
                   ),
                   const Text(
                     "NEWS APP",
@@ -62,8 +81,13 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   InkWell(
                     onTap: () {
-                      print("click");
-                      controller.newsforyou();
+                      _controller.logout();
+                      // Get.to(Login());
+                      // Get.toNamed(RouteName.loginView);
+                      userPreference.removeUser().then((value) {
+                        Get.toNamed(RouteName.loginView);
+                      });
+                      print("logout Icon Clicked");
                     },
                     child: Container(
                       width: 50,
@@ -72,7 +96,9 @@ class _HomeViewState extends State<HomeView> {
                         color: Theme.of(context).colorScheme.primaryContainer,
                         borderRadius: BorderRadius.circular(100),
                       ),
-                      child: const Icon(Icons.person),
+                      child: const Icon(
+                        Icons.logout,
+                      ),
                     ),
                   )
                 ],
@@ -87,10 +113,10 @@ class _HomeViewState extends State<HomeView> {
                     "Hottest News",
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
-                  Text(
-                    "See All News",
-                    style: Theme.of(context).textTheme.labelSmall,
-                  )
+                  // Text(
+                  //   "See All News",
+                  //   style: Theme.of(context).textTheme.labelSmall,
+                  // )
                 ],
               ),
               SizedBox(
@@ -110,10 +136,12 @@ class _HomeViewState extends State<HomeView> {
                           children: controller.trandingNewsList
                               .map((e) => TrandingCard(
                                     ontap: () {
-                                      Get.to(() => NewsDetailedpage());
+                                      Get.to(() => NewsDetailsPage(
+                                            news: e,
+                                          ));
                                     },
                                     imageUrl: e.urlToImage ??
-                                        "https://static.toiimg.com/thumb/msid-108654854,imgsize-63124,width-400,resizemode-4/108654854.jpg", // Using null-aware operator
+                                        "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWPL51z4fYdKctuvRMoy-zaTLoF2h4CggcaCYaJgh2V8Vo3AXdkP-C2-K0VCkcd5TpaCKLaNpig5oHiy9UVEGr2Vlq85ngUhG1qXSZ9xIaLshpVGQ2ezJEGXEtbtNXB_cYM1XoUnnLnkgdY6FjX5JzhJ8h8G8CQnOu9p-JLexfYYo0gKBsT1_5DeQmqWE/s249/noimg.png",
                                     title: e.title!,
                                     author: e.author ?? "Unknown",
                                     tag: "Tranding no 1",
@@ -149,10 +177,12 @@ class _HomeViewState extends State<HomeView> {
                   : Column(
                       children: controller.NewsForYou.map((e) => NewsTile(
                             ontap: () {
-                              Get.to(() => NewsDetailedpage());
+                              Get.to(() => NewsDetailsPage(
+                                    news: e,
+                                  ));
                             },
                             imageUrl: e.urlToImage ??
-                                "https://static.toiimg.com/thumb/msid-108654854,imgsize-63124,width-400,resizemode-4/108654854.jpg",
+                                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWPL51z4fYdKctuvRMoy-zaTLoF2h4CggcaCYaJgh2V8Vo3AXdkP-C2-K0VCkcd5TpaCKLaNpig5oHiy9UVEGr2Vlq85ngUhG1qXSZ9xIaLshpVGQ2ezJEGXEtbtNXB_cYM1XoUnnLnkgdY6FjX5JzhJ8h8G8CQnOu9p-JLexfYYo0gKBsT1_5DeQmqWE/s249/noimg.png",
                             title: e.title!,
                             author: e.author ?? "Unknown",
                             time: e.publishedAt ?? "no time",

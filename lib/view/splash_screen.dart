@@ -23,12 +23,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal,
-      body: Center(
-          child: Text(
-        'welcome_back'.tr,
-        textAlign: TextAlign.center,
-      )),
-    );
+        backgroundColor: Colors.teal,
+        body: Center(
+          child: Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.asset(
+                'assets/images/newslogo.png',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ));
   }
 }
